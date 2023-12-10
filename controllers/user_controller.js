@@ -112,13 +112,14 @@ module.exports.sendResetPasswordLinkViaEmail    =   async function(request,respo
 
 module.exports.setNewPassword   =  async function(request,response){
     try {
-        let user    =   await User.findById(request.user._id);
-
+        let user    =   await User.findOne({accessToken : request.params.accessToken});
+        
         if(!user){
             request.flash('error','User does not exist');
             console.log('Error in finding user');
             return;
-        }else if(user.isTokenValid){
+        } 
+        if(user.isTokenValid){
             return response.render('changePassword.ejs',{
                 title: 'Reset Password',
                 access: true,

@@ -1,8 +1,8 @@
 const mongoose  =   require('mongoose');
 
-//mongoose.connect(`mongodb://127.0.0.1/nodejsAuthentication_development`);
+mongoose.connect(`mongodb://127.0.0.1/nodejsAuthentication_development`);
 
-mongoose.connect(`mongodb+srv://nodeJSAuth:3IXaIyG77ucFpQCq@nodejs-auth.tayfvri.mongodb.net/`);
+//mongoose.connect(`mongodb+srv://nodeJSAuth:3IXaIyG77ucFpQCq@nodejs-auth.tayfvri.mongodb.net/`);
 
 
 const db    =   mongoose.connection;
