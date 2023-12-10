@@ -133,9 +133,32 @@ module.exports.setNewPassword   =  async function(request,response){
     }
 }
 
-module.exports.updatePasswordInDataBase =   async function(request,response){
+module.exports.setNewPasswordAfterLogIn   =  async function(request,response){
     try {
         let user    =   await User.findById(request.user._id);
+        console.log(user);
+        if(!user){
+            request.flash('error','User does not exist');
+            console.log('Error in finding user');
+            return;
+        } 
+        if(user.isTokenValid){
+            return response.render('changePasswordAfterLogIn.ejs',{
+                title: 'Reset Password',
+                access: true,
+                accessToken: request.params.accessToken
+            });
+        }else{
+            console.log('Error in rendering user');
+        }
+    } catch (error) {
+        console.log('error',error);
+    }
+}
+
+module.exports.updatePasswordInDataBase =   async function(request,response){
+    try {
+        let user    =  await User.findOne({accessToken : request.params.accessToken});
 
         if(!user){
             console.log('Error in finding user');
@@ -161,6 +184,36 @@ module.exports.updatePasswordInDataBase =   async function(request,response){
         console.log(error);
     }
 }
+
+module.exports.updatePasswordInDataBaseAfterLogIn =   async function(request,response){
+    try {
+        let user    =   await User.findById(request.user._id);
+        
+        if(!user){
+            console.log('Error in finding user');
+            return;
+        }
+        if(user.isTokenValid){
+            if(request.body.newPass == request.body.confirmPass){
+                user.password    =   user.generateHash(request.body.newPass);
+                user.isTokenValid   =   false;
+                user.save();
+                request.flash('success','Password Updated Successfully');
+                return response.redirect('/users/login');
+            }else{
+                request.flash('error','Password do not Match');
+                return response.redirect('back');
+            }
+        }else{
+            request.flash('error','Link Expired!');
+            return response.redirect('/users/forgotPassword');
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 module.exports.destroySession   =   function(request,response){
     request.logout(function(err){

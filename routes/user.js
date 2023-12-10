@@ -13,7 +13,10 @@ router.post('/createSession',passport.authenticate('local',{failureRedirect:'/us
 router.get('/dashboard',userController.dashBoard);
 router.post('/sendEmail',userController.sendResetPasswordLinkViaEmail);
 router.get('/resetPassword/:accessToken',userController.setNewPassword);
+router.get('/setNewPassword/:accessToken',userController.setNewPasswordAfterLogIn);
+
 router.post('/updatePassword/:accessToken',userController.updatePasswordInDataBase);
+router.post('/updateNewPassword/:accessToken',userController.updatePasswordInDataBaseAfterLogIn);
 
 router.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
 router.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/users/login'}),userController.createSession);
