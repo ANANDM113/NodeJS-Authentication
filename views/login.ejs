@@ -1,0 +1,47 @@
+
+<script src="https://kit.fontawesome.com/ebe2b0dfa4.js" crossorigin="anonymous"></script>
+
+<div id="login-heading"> 
+    <h1>NodeJS Authentication</h1>
+</div>
+<section id="container">
+
+    <div id="login-container">
+        
+            <form action="/users/createSession" method="post">
+
+                <div>
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                </div>
+
+                <div>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                </div>
+
+                <div class="form-link">
+                    <a href="/users/forgotPassword">Forgotten password?</a>
+                </div>
+
+                <button type="submit">Login</button>
+
+                <div class="form-link">
+                   <span><a href="/users/register">Don't have an account? Signup</a></span> 
+                </div>
+
+                <div class="line">
+
+                </div>
+
+                <div id="google-link">
+                    
+                    <a href="/users/auth/google">
+                        <i class="fa-brands fa-google"></i>
+                        <span>Login with Google</span>
+                    </a>
+                 </div>
+        
+            </form>
+        
+    </div>
+    
+</section>
